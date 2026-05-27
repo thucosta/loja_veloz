@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  api_gateway:
+    build:
+      context: ./api_gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - PEDIDOS_URL=http://pedidos:8000
+      - PAGAMENTOS_URL=http://pagamentos:8000
+      - ESTOQUE_URL=http://estoque:8000
+    depends_on:
+      - pedidos
+      - pagamentos
+      - estoque
+    networks:
+      - loja_rede
+
+  pedidos:
+    build:
+      context: ./pedidos
+    ports:
+      - "8001:8000"
+    networks:
+      - loja_rede
+
+  pagamentos:
+    build:
+      context: ./pagamentos
+    ports:
+      - "8002:8000"
+    networks:
+      - loja_rede
+
+  estoque:
+    build:
+      context: ./estoque
+    ports:
+      - "8003:8000"
+    networks:
+      - loja_rede
+
+networks:
+  loja_rede:
+    driver: bridge
