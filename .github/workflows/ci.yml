@@ -53,6 +53,8 @@ jobs:
         with:
           target: 'http://localhost:8000/docs'
           fail_action: false
+          # Disable issue creation to prevent permission errors
+          issue_title: ''
 
   docker-build-push:
     needs: security-scan
